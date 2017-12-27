@@ -21,10 +21,11 @@ public class ReactiveTweetController {
     }
 
     /*
-        We set the HTTP headers to indicate that this endpoint is going to produce JSON Server-Side Events.
-        We also then return the Flux type.
+        We set the HTTP headers to indicate that this endpoint is going to produce Text-based Server-Side Events in the form of an Event Stream.
+        The requesting client must make sure to set their accept header to text/event-stream to consume this endpoint.
+        Returning the Flux type allows us to continually send Tweet values as the service creates them.
      */
-    @GetMapping(produces = MediaType.APPLICATION_STREAM_JSON_VALUE)
+    @GetMapping(produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Flux<Tweet> getTweets() {
         return reactiveTweetService.getTweets();
     }
